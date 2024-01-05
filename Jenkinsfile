@@ -44,6 +44,9 @@ pipeline {
           steps {
             sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
+            echo "Stopping and deleting any previous containers for clean test case execution"
+            docker ps -a | grep "postgres" | awk '{print \$1}' | xargs -I {} sh -c 'docker stop {} && docker rm {}'
+            sleep 10
             ./mvnw clean test -P artifactory
             popd
             """
