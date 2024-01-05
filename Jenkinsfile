@@ -40,12 +40,22 @@ pipeline {
             """
           }
         }
-  	    stage('Build Package') {
+  	    stage('Build Jar Package') {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
             ./mvnw package
             ls -lrt target/*
+            popd
+            """
+          }
+        }
+         stage('Docker Packaging') {
+          steps {
+      	    sh """#!/bin/bash -e
+            pushd \${WORKSPACE}/spring-petclinic
+            docker build -t spring-petclinic .
+            docker images
             popd
             """
           }
