@@ -48,13 +48,15 @@ pipeline {
             docker ps -a | grep "postgres" | awk '{print \$1}' | xargs -I {} sh -c 'docker stop {} && docker rm {}'
             sleep 10
             ./mvnw clean test -P artifactory
+            echo "--------- listing the artifacts in target folder --------------"
+            ls -lrt target/*
             popd
             """
           }
           post {
             always {
                 // Archive Surefire reports for display in Jenkins
-                junit 'target/surefire-reports/*.xml'
+                junit 'target/surefire-reports/TEST*.xml'
             }
         }
         }
