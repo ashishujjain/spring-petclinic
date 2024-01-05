@@ -1,6 +1,6 @@
 pipeline {
 	  agent {
-        dockerContainer{
+        docker{
           image 'openjdk:21-jdk'
         }
     }
