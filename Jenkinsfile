@@ -1,6 +1,6 @@
 pipeline {
 	  agent {
-        label 'master'
+        label 'Mac-slave'
     }
     stages {
         stage('WorkSpace Cleanup') {
