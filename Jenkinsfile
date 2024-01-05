@@ -55,9 +55,9 @@ pipeline {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
             
-            docker ps -a | grep "spring-petclinic" | awk '{print $1}' | xargs -I {} docker stop {}
-            docker ps -a | grep "spring-petclinic" | awk '{print $1}' | xargs -I {} docker rm {}
-            docker images | grep 'spring-petclinic' | awk '{print $1":"$2}' | xargs -I {} docker rmi {}
+            docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker stop {}
+            docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker rm {}
+            docker images | grep 'spring-petclinic' | awk '{print \$1":"\$2}' | xargs -I {} docker rmi {}
 
             docker build -t spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER} .
             docker images | grep spring-petclinic
