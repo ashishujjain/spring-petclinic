@@ -56,16 +56,16 @@ pipeline {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
             
-            echo " Stopping any previous containers for clean deployment of the app in the pipeline"
+            echo "Stopping any previous containers for clean deployment of the app in the pipeline"
             docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker stop {}
             
-            echo " Deleting any previous containers which are in stoped state for clean container status"
+            echo "Deleting any previous containers which are in stoped state for clean container status"
             docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker rm {}
             
-            echo " Deleting images to save space and have clean image list"
+            echo "Deleting images to save space and have clean image list"
             docker images | grep 'spring-petclinic' | awk '{print \$1":"\$2}' | xargs -I {} docker rmi {}
 
-            echp "building the docker image based on the default Dockerfile in the repo"
+            echo "Building the docker image based on the default Dockerfile in the repo"
             docker build -t spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER} .
             
             echo "Listing the docker image"
@@ -74,7 +74,7 @@ pipeline {
             echo "Creating a tarball of the container image to be shared as artifacts to be used on different machine, will share the steps how to use in seperate document"
             docker save -o \${WORKSPACE}/spring-petclinic/target/spring-petclinic_v\${BUILD_NUMBER}.tar spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER}
             
-            echo "listing the docker image artifact in the target folder, which can be shared"
+            echo "Listing the docker image artifact in the target folder, which can be shared"
             ls -lrt target/spring-petclinic_v\${BUILD_NUMBER}.tar
             
             popd
