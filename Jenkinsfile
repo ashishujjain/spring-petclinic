@@ -1,7 +1,6 @@
 pipeline {
 	  agent {
         dockerContainer{
-          label 'docker'
           image 'openjdk:21-jdk'
         }
     }
