@@ -53,12 +53,6 @@ pipeline {
             popd
             """
           }
-          post {
-            always {
-                // Archive Surefire reports for display in Jenkins
-                junit 'target/surefire-reports/TEST*.xml'
-            }
-        }
         }
         stage('Build Jar Package with skip test') {
           steps {
@@ -112,6 +106,14 @@ pipeline {
             echo "Launch URL : http://\${ip_address}:8080"
             """
           }
+        }
+        post {
+            always {
+                // Archive Surefire reports for display in Jenkins
+                junit(
+                  allowEmptyResults: true,
+                   testResults: '**/target/surefire-reports/TEST*.xml')
+            }
         }
     }
 }
