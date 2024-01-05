@@ -1,7 +1,9 @@
 pipeline {
 	  agent {
-        label 'docker'
-        image 'openjdk:21-jdk'
+        dockerContainer{
+          label 'docker'
+          image 'openjdk:21-jdk'
+        }
     }
     stages {
         stage('WorkSpace Cleanup') {
