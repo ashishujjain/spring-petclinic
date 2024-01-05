@@ -54,7 +54,6 @@ pipeline {
          stage('Docker Packaging') {
           steps {
       	    sh """#!/bin/bash -e
-            set -x
             pushd \${WORKSPACE}/spring-petclinic
             
             echo "Stopping any previous containers for clean deployment of the app in the pipeline"
