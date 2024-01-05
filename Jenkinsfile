@@ -31,11 +31,20 @@ pipeline {
               ])
           }
         }
-        stage('Running maven test') {
+        stage('Running maven cache cleaning') {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
-            ./mvnw test
+            ./mvnw dependency:purge-local-repository
+            popd
+            """
+          }
+        }
+        stage('Running maven test') {
+          steps {
+            sh """#!/bin/bash -e
+            pushd \${WORKSPACE}/spring-petclinic
+            ./mvnw clean test -P artifactory
             popd
             """
           }
@@ -44,7 +53,7 @@ pipeline {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
-            ./mvnw package -DskipTests
+            ./mvnw deploy -DskipTests -P artifactory
             echo "--------- listing the artifacts in target folder --------------"
             ls -lrt target/*
             popd

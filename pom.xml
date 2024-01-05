@@ -37,6 +37,14 @@
 
   </properties>
 
+  <distributionManagement>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0llao4piow42-artifactory-primary-0-snapshots</name>
+        <url>https://ashishsinghjfrog.jfrog.io/artifactory/jfrogdemoashish-libs-snapshot</url>
+    </snapshotRepository>
+</distributionManagement>
+
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
     <dependency>
