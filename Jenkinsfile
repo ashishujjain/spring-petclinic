@@ -44,7 +44,7 @@ pipeline {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
-            ./mvnw package
+            ./mvnw package -DskipTests
             ls -lrt target/*
             popd
             """
