@@ -112,7 +112,7 @@ pipeline {
                 // Archive Surefire reports for display in Jenkins
                 junit(
                   allowEmptyResults: true,
-                   testResults: '**/target/surefire-reports/TEST*.xml')
+                  testResults: '**/target/surefire-reports/TEST*.xml')
             }
         }
     }
