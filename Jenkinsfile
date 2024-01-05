@@ -64,7 +64,8 @@ pipeline {
             docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker rm {}
             echo ""
 
-            docker ps -a | grep "spring-petclinic"
+            docker ps -a | grep "spring-petclinic" || echo "Container not found"
+
             echo ""
             echo "Deleting images to save space and have clean image list"
             docker images | grep 'spring-petclinic' | awk '{print \$1":"\$2}' | xargs -I {} docker rmi {}
