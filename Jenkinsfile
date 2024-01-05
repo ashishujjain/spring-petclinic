@@ -1,5 +1,8 @@
 pipeline {
-	  agent none
+	  agent {
+        label 'docker'
+        image 'openjdk:21-jdk'
+    }
     stages {
         stage('WorkSpace Cleanup') {
           steps {
@@ -30,11 +33,6 @@ pipeline {
           }
         }
         stage('test') {
-    	    agent {
-      	    docker {
-        	  image 'openjdk:21-jdk'
-            }
-          }
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
@@ -44,11 +42,6 @@ pipeline {
           }
         }
   	    stage('Build Package') {
-    	    agent {
-      	    docker {
-        	  image 'openjdk:21-jdk'
-            }
-          }
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
