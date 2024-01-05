@@ -54,10 +54,23 @@ pipeline {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
+            
+            docker ps -a | grep "spring-petclinic" | awk '{print $1}' | xargs -I {} docker stop {}
+            docker ps -a | grep "spring-petclinic" | awk '{print $1}' | xargs -I {} docker rm {}
+            docker images | grep 'spring-petclinic' | awk '{print $1":"$2}' | xargs -I {} docker rmi {}
+
             docker build -t spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER} .
-            docker images
+            docker images | grep spring-petclinic
             docker save -o \${WORKSPACE}/spring-petclinic/target/spring-petclinic_v\${BUILD_NUMBER}.tar spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER}
+            ls -lrt target/spring-petclinic_v\${BUILD_NUMBER}.tar
             popd
+            """
+          }
+        }
+        stage('Docker app launch') {
+          steps {
+      	    sh """#!/bin/bash -e
+            docker run -d -p 8080:8080/tcp --name spring-petclinic-v\${BUILD_NUMBER} -it spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER}
             """
           }
         }
