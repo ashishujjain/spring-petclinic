@@ -58,7 +58,10 @@ pipeline {
             
             echo "Stopping any previous containers for clean deployment of the app in the pipeline"
             #docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} docker stop {}
-            docker ps -a | grep "spring-petclinic" | awk '{print $1}' | xargs -I {} sh -c 'docker stop {} && docker rm {}'
+            docker ps -a | grep "spring-petclinic" | awk '{print \$1}'
+            echo ""
+            
+            docker ps -a | grep "spring-petclinic" | awk '{print \$1}' | xargs -I {} sh -c 'docker stop {} && docker rm {}'
 
             echo ""
             echo "Deleting any previous containers which are in stoped state for clean container status"
