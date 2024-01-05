@@ -52,6 +52,12 @@ pipeline {
             """
           }
         }
+        post {
+            always {
+                // Archive Surefire reports for display in Jenkins
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
         stage('Build Jar Package with skip test') {
           steps {
       	    sh """#!/bin/bash -e
