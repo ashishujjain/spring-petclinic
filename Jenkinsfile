@@ -54,9 +54,9 @@ pipeline {
           steps {
       	    sh """#!/bin/bash -e
             pushd \${WORKSPACE}/spring-petclinic
-            docker build -t spring-petclinic-\${BUILD_NUMBER}:v\${BUILD_NUMBER} .
+            docker build -t spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER} .
             docker images
-            docker save -o \${WORKSPACE}/spring-petclinic/target/spring-petclinic_\${BUILD_NUMBER}.tar spring-petclinic-\${BUILD_NUMBER}:v\${BUILD_NUMBER}
+            docker save -o \${WORKSPACE}/spring-petclinic/target/spring-petclinic_v\${BUILD_NUMBER}.tar spring-petclinic-v\${BUILD_NUMBER}:v\${BUILD_NUMBER}
             popd
             """
           }
